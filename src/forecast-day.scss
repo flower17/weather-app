@@ -1,0 +1,70 @@
+@font-face{
+    font-family: Assistant;
+    src: url('./fonts/Assistant-Regular.ttf');
+}
+@font-face{
+    font-family: PragatiNarrow;
+    src: url('./fonts/PragatiNarrow-Regular.ttf');
+}
+
+.forecast-day{
+    display: flex;
+    flex-direction: column;
+    flex-basis: 20%;
+}
+
+.forecast-day:nth-child(2n+1){
+    background: rgb(50, 49, 48);
+}
+.forecast-day *{
+    text-align: center;
+}
+.forecast-day .date-string{
+    background: rgba(18, 18, 19, 0.17);
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.5em;
+    white-space: pre-wrap;
+}
+
+.forecast-day .temp-max{
+    font-family: Assistant;
+    font-size: 30px;
+    font-weight: bold;
+    height: 2em;
+    line-height:2.6em; 
+}
+
+.forecast-day .temp-min{
+    color: rgb(174, 178, 189);
+    font-family: PragatiNarrow;
+    font-size: 16px;
+    height: 4em;
+    line-height:1em; 
+}
+.forecast-day .icon{
+    height: 120px;
+    line-height: 160px;
+}
+.forecast-day .icon img{
+    height: 45px;
+}
+.forecast-day .wind{
+    height: 2.5em;
+}
+.forecast-day .wind span{
+    color: rgb(174, 178, 189);
+    font-family: PragatiNarrow;
+    font-size: 16px;
+}
+
+@media (min-width: 340px) and (max-width: 379px){
+    .forecast-day .date-string{
+        font-size: 17px;
+    }
+}
+@media (min-width: 380px){
+    .forecast-day .date-string{
+        font-size: 19px;
+    }
+}

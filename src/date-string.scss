@@ -1,0 +1,15 @@
+@font-face{
+    font-family: Assistant;
+    src: url('./fonts/Assistant-Regular.ttf');
+}
+
+.date-string{
+    background: rgb(49, 49, 49);
+    color: rgb(174, 178, 189);
+    font-family: Assistant;
+    font-size: 19px;
+    font-weight: 600;
+    height: 3em;
+    line-height: 3em;
+    text-align: center;
+}

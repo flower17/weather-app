@@ -1,0 +1,14 @@
+@font-face{
+    font-family: Assistant;
+    src: url('./fonts/Assistant-Regular.ttf');
+}
+.geo-coordinates{
+    color: rgb(26, 176, 211);
+    font-family: Assistant;
+    font-size: 15px;
+    font-weight: bold;
+    position: relative;
+    text-align: center;
+    top: -1.5em;
+    z-index: 100;
+}

@@ -1,0 +1,27 @@
+@font-face{
+    font-family: PragatiNarrow;
+    src: url('./fonts/PragatiNarrow-Regular.ttf');
+}
+.suntime{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+.suntime div{
+    color: rgb(174, 178, 189);
+    font-family: Assistant;
+    font-size: 16px;
+    margin: 0 5em;
+}
+
+@media (max-width: 479px){
+    .suntime div{
+        margin: 0 2em;
+    }
+}
+@media (min-width: 480px) and (max-width: 539px){
+    .suntime div{
+        margin: 0 4em;
+    }
+}

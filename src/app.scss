@@ -1,0 +1,70 @@
+.app{
+    box-shadow: 0 0 3px gray;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    min-width: 320px;
+    position: relative;
+}
+
+.current-section{
+    background: rgb(54, 53, 53);
+    flex-basis: 100%;
+}
+.forecast-section{
+    background: rgb(54, 53, 53);
+    flex-basis: 100%;
+}
+
+@keyframes loader-spinning{
+    from {transform: rotateZ(  0deg)}
+    to   {transform: rotateZ(359deg)}
+}
+.loader{
+    background: rgba(48, 47, 47, 0.93);
+    bottom:0;
+    display: grid;
+    left: 0;
+    place-items: center;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 300;
+}
+.loader img{
+    animation: loader-spinning 9s infinite linear;
+    width: 200px;
+}
+.forecast-section{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+@media (max-width: 559px){
+    .app{
+        width: 100%;
+    }
+}
+
+@media (min-width: 560px) and (max-width: 963px){
+    .app{
+        max-width: 560px;
+        width: 98%;
+    }
+}
+
+@media (min-width: 964px){
+    .app{
+        margin: 16vh auto;
+        max-width: 1120px;
+        width: 98%;
+    }
+    .current-section{
+        flex-basis: 50%;
+    }
+    .forecast-section{
+        flex-basis: 50%;
+    }
+}

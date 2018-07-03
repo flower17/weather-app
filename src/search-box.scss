@@ -1,0 +1,82 @@
+@font-face{
+    font-family: PragatiNarrow;
+    src: url('./fonts/PragatiNarrow-Regular.ttf');
+}
+.search-box{
+    width: 100%;
+}
+.search-form{
+    margin: 0 auto;
+    max-width: 480px;
+    min-width: 280px;
+    position: relative;
+    width: 40%;
+}
+.search-form input{
+    background: rgba(80, 78, 78, 0.07);
+    border: none;
+    color: rgb(174, 178, 189);
+    font-family: PragatiNarrow;
+    font-size: 30px;
+    text-align: center;
+    width: 100%;
+}
+.search-form img{
+    left: 89%;
+    opacity: 0.5;
+    position: relative;
+    top: -36px;
+    transition: all 0.2s ease-out;
+    width: 7%;
+}
+.search-form input:hover,
+.search-form input:focus{
+    background: rgba(128, 128, 128, 0.07);
+    box-shadow: 0 0 3px rgb(26, 176, 211);
+}
+.search-form input:hover~img{
+    opacity: 1;
+    transform: scale(1.3);
+}
+.search-form input:focus~img{
+    opacity: 0;
+}
+.city-suggestions:empty{
+    display: none;
+}
+.suggestions-wrapper{
+    margin: 0 auto;
+    max-width: 480px;
+    min-width: 280px;
+    position: relative;
+    top: -1.4em;
+    width: 40%;
+    z-index: 200;
+}
+.city-suggestions{
+    background: rgb(36, 41, 45);
+    color: rgb(181, 184, 184);
+    left:0;
+    list-style: none;
+    position: absolute;
+    right: 0;
+}
+
+.tip{
+    color: rgb(221, 221, 232);
+    font-size: 13px;
+    font-style: italic;
+    text-align: center;
+}
+.info{
+    border: solid 1px rgb(240, 240, 245);
+    border-radius: 50%;
+    color: rgb(240, 240, 245);
+    font-size: 14px;
+    margin: 0 0.5em;
+    padding: 0 0.45em 0 0.42em;
+}
+.example{
+    color: rgb(240, 240, 245);
+    text-shadow: 0 0 1px rgb(240, 240, 245);
+}

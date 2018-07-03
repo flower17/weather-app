@@ -1,0 +1,74 @@
+@font-face{
+    font-family: Assistant;
+    src: url('./fonts/Assistant-Regular.ttf');
+}
+@font-face{
+    font-family: PragatiNarrow;
+    src: url('./fonts/PragatiNarrow-Regular.ttf');
+}
+.current-weather{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0.5em 1em 1.1em 1em;
+    text-align: center;
+}
+.current-weather *{
+    color: rgb(174, 178, 189);
+    font-family: PragatiNarrow;
+    font-size: 18px;
+}
+.temp{
+    color: white;
+    flex-basis: 50%;
+    font-family: Assistant;
+    font-size: 75px;
+    line-height: 1.33em;
+}
+.icon{
+    flex-basis: 50%;
+}
+.icon img{
+    height: 88px;
+}
+.humidity{
+    flex-basis: 33%;
+}
+.humidity img{
+    height: 14px;
+    margin: 0 3px;
+}
+.wind{
+    flex-basis: 33%;
+}
+.description{
+    flex-basis: 33%;
+}
+.description::first-letter{
+    text-transform: capitalize;
+}
+
+@media (min-width: 360px) and (max-width: 419px){
+    .temp{
+        font-size: 85px;
+    }
+    .icon img{
+        height: 98px;
+    }
+}
+@media (min-width: 420px) and (max-width: 479px){
+    .temp{
+        font-size: 95px;
+    }
+    .icon img{
+        height: 112px;
+    }
+}
+@media (min-width: 480px) and (max-width: 539px){
+    .temp{
+        font-size: 105px;
+    }
+    .icon img{
+        height: 122px;
+    }
+}
