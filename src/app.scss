@@ -1,3 +1,6 @@
+body{
+    background: url('./img/rain.jpg');
+}
 .app{
     box-shadow: 0 0 3px gray;
     color: white;
@@ -15,6 +18,9 @@
 }
 .forecast-section{
     background: rgb(54, 53, 53);
+    flex-basis: 100%;
+}
+.footer{
     flex-basis: 100%;
 }
 

@@ -1,0 +1,58 @@
+@font-face{
+    font-family: PragatiNarrow;
+    src: url('./fonts/PragatiNarrow-Regular.ttf');
+}
+.footer{
+    color: rgb(174, 178, 189);
+    background: rgb(56, 49, 49);
+    max-width: 100%;
+}
+.footer *{
+    font-family: PragatiNarrow;
+    font-size: 13px;
+}
+.footer div{
+    text-align: center;
+    width: 100%;
+}
+.footer ul{
+    display: inline;
+    list-style: none;
+}
+.footer ul li{
+    display: inline;
+    padding: 0 0.3em;
+}
+.footer a{
+    color: rgb(232, 232, 232);
+    text-decoration: none;
+}
+.footer label{
+    color: rgb(232, 232, 232);
+    cursor: pointer;
+}
+.footer label:hover{
+    color: rgb(246, 189, 0);
+}
+.first-row a:hover{
+    color: rgb(232, 64, 80);
+}
+.footer input[type="checkbox"]{
+    display: none;
+}
+.resources{
+    max-height: 0px;
+    overflow: hidden;
+    transition: all 0.3s ease-in;
+}
+.footer input[type="checkbox"]:checked ~ .resources{
+    max-height: 50px;
+}
+.resources a:hover{
+    color: rgb(246, 189, 0);
+}
+@media (min-width: 440px){
+    .footer *{
+        font-size: 16px;
+    }
+}

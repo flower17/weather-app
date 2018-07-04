@@ -12,6 +12,7 @@ import Suntime from './Suntime';
 import CityLog from './CityLog';
 import CurrentWeather from './CurrentWeather';
 import ForecastDay from './ForecastDay';
+import Footer from './Footer';
 
 import './app.scss';
 
@@ -53,7 +54,6 @@ class App extends React.Component {
 			// Option 2: get location from cookies (last visited city)
 			// Option 3: load default location
 	}
-
 
 	// search current weather by city id 
 	getCurrentWeather = (cityId) => {
@@ -353,6 +353,7 @@ class App extends React.Component {
 						)                                                /* //TODO: take units from state  */
 					}
 				</section>
+				<Footer />
 
 			</div>
 		);
