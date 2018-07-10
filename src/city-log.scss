@@ -10,19 +10,21 @@
     justify-content: flex-start;
     list-style: none;
 }
-
+.city-log ul li{
+    flex: auto;
+    overflow: hidden;
+    text-align: center;
+}
 .city-log ul li{
     color: rgb(221, 98, 98);
     cursor: pointer;
-    flex: auto;
     font-family: Assistant;
     font-size: 18px;
     height: 2em;
     line-height: 2em;
     margin: 0.5em 0;
     max-width: 20%;
-    overflow: hidden;
-    text-align: center;
+    text-decoration: none;
 }
 .city-log ul li:hover{
     text-shadow: 0 0 2px rgb(192, 123, 123);

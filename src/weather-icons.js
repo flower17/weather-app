@@ -21,6 +21,7 @@ import humidity from './icons/humidity.svg';
 import search from  './icons/search.svg';
 import loader from  './icons/loader.svg';
 import pen    from  './icons/pen.svg'; 
+import settings from  './icons/settings.svg'; 
 
 export const weatherIcons = {
     icon01d,
@@ -46,4 +47,5 @@ export const weatherIcons = {
     search,
     loader,
     pen,
+    settings,
 };

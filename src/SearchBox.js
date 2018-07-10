@@ -104,6 +104,8 @@ class SearchBox extends React.Component {
         this.setCitySuggestions([]);
 
         this.props.loadWeatherForCity(selectedCity);
+
+        //console.log('ROUTR', this.props);
     }
 
     mouseOverCity = (e) => {
@@ -218,6 +220,7 @@ class SearchBox extends React.Component {
                 this.setCitySuggestions([]);
 
                 this.props.loadWeatherForCity(selectedCity);
+                //console.log('ROUTR', this.props);
             }
             else{
                 this.showSearchTip(e.target.value);
@@ -237,13 +240,31 @@ class SearchBox extends React.Component {
     // once props.city value is assigned
     // since once props.city value is assigned asyncronously (thus with delay) we need this method
     componentDidUpdate(prevProps){
-        if ((Object.keys(prevProps.city).length === 0) && (!this.state.city.id && this.props.city.id)
-            || (this.state.city.id && this.props.city.id && (this.state.city.id !== this.props.city.id))){
+
+        // if previously city in props was empty AND ( there is NO cityId, but there is cityId in props)
+        // OR there is cityId and cityId in props, AND these 2 cityIDs are not same
+        console.log(prevProps.city);
+        console.log(Object.keys(prevProps.city).length === 0, 
+                                !this.state.city.id && this.props.city.id,
+                                this.state.city.id && this.props.city.id,
+                                this.state.city.id !== this.props.city.id
+                            );
+        // if ((Object.keys(prevProps.city).length === 0) && (!this.state.city.id && this.props.city.id)
+        //     || (this.state.city.id && this.props.city.id && (this.state.city.id !== this.props.city.id))){
+        //     this.setState({ 
+        //         city: this.props.city, 
+        //         searchValue: this.getInputValue(this.props.city)
+        //     });
+        // }
+
+        if (this.props.city.id !== this.state.city.id || this.state.searchValue.length === 0){
             this.setState({ 
                 city: this.props.city, 
                 searchValue: this.getInputValue(this.props.city)
             });
+            console.log('Set');
         }
+        
     }
 
     render() {

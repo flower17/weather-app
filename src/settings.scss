@@ -1,0 +1,29 @@
+.settings{
+    background: rgb(54, 53, 53);
+    box-shadow: 0 0 3px gray;
+    color: white;
+    margin: 0 auto;
+    margin: 16vh auto;
+    min-width: 320px;
+    position: relative;
+}
+
+@media (max-width: 559px){
+    .settings{
+        width: 100%;
+    }
+}
+
+@media (min-width: 560px) and (max-width: 963px){
+    .settings{
+        max-width: 560px;
+        width: 98%;
+    }
+}
+
+@media (min-width: 964px){
+    .settings{
+        max-width: 1120px;
+        width: 98%;
+    }
+}

@@ -8,6 +8,7 @@ import Wind from './Wind';
 import './forecast-day.scss';
 
 const ForecastDay = props => {
+
     return (
         <div className="forecast-day">
             <DateString seconds={props.forecast.date}
@@ -33,7 +34,7 @@ const ForecastDay = props => {
             </div>
             <Wind windDir={props.forecast.windDir}
                   windSpeed={props.forecast.windSpeed} 
-                  units='metric' />   {/* // TODO: take units from settings*/}
+                  settings={props.settings} /> 
         </div>
     );
 }

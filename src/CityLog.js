@@ -18,11 +18,12 @@ const CityLog = props => {
             <ul>
                 {
                     props.cityList
-                        ?   props.cityList.map((item, i) => <li key={`${item.id}_${i}`}
-                                                            data-id={item.id}
-                                                            onClick={handleClick}>
-                                                            {item.cityName}, {item.countryCode}
-                                                        </li>)
+                        ?   props.cityList.map((item, i) => 
+                                <li key={`${item.id}_${i}`}
+                                    data-id={item.id}
+                                    onClick={handleClick}>
+                                        {item.cityName}, {item.countryCode}                    
+                                </li>)
                         : null
                 }
             </ul>

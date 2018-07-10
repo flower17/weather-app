@@ -1,17 +1,14 @@
 import React from 'react';
 
+
 import { ipstackURL, openweathermapCurrentURL, openweathermapForecastURL, timezonedbURL } from './third-party-config';
-import { weatherIcons } from './weather-icons';
+
 import { removeDuplicates } from './helpers';
 import { parseForecastData } from './helpers';
+import { weatherIcons } from './weather-icons';
 
-import DateString from './DateString';
-import SearchBox from './SearchBox';
-import GeoCoordinates from './GeoCoordinates';
-import Suntime from './Suntime';
-import CityLog from './CityLog';
-import CurrentWeather from './CurrentWeather';
-import ForecastDay from './ForecastDay';
+import MainSection from './MainSection';
+import ForecastSection from './ForecastSection';
 import Footer from './Footer';
 
 import './app.scss';
@@ -66,19 +63,19 @@ class App extends React.Component {
 		const weatherRequestParams = {
 			APPID: process.env.REACT_APP_OPENWEATHERMAP_API_KEY,
 			id: cityId,
-			units: 'metric',  // TODO: get units from settings
+			units: this.props.settings.units,  
 			lang: 'en_US',    // TODO: decide if there is multy-lang support. Probably, NO?
 		}
 		
 		const weatherFetchURL = 
 			openweathermapCurrentURL +  
 			Object.keys(weatherRequestParams).map(key => key + '=' + weatherRequestParams[key]).join('&');
-		console.log('weatherFetchURL', weatherFetchURL);
+		//console.log('weatherFetchURL', weatherFetchURL);
 
 		return fetch(weatherFetchURL)
 			.then(data => {	
 				if (data.status === 200){
-					console.log('weather data:',data);
+					//console.log('weather data:',data);
 					return data.json();
 				}
 				else if (data.status === 404){
@@ -106,19 +103,19 @@ class App extends React.Component {
 		const forecastRequestParams = {
 			APPID: process.env.REACT_APP_OPENWEATHERMAP_API_KEY,
 			id: cityId,
-			units: 'metric',  // TODO: get units from settings
+			units: this.props.settings.units,
 			lang: 'en_US',    // TODO: decide if there is multy-lang support. Probably, NO?
 		}
 		
 		const forecastFetchURL = 
 			openweathermapForecastURL +  
 			Object.keys(forecastRequestParams).map(key => key + '=' + forecastRequestParams[key]).join('&');
-		//console.log('forecastFetchURL', forecastFetchURL);
+		console.log('forecastFetchURL', forecastFetchURL);
 
 		return fetch(forecastFetchURL)
 			.then(data => {	
 				if (data.status === 200){
-					//console.log('forecast data:',data);
+					console.log('forecast data:',data);
 					return data.json();
 				}
 				else if (data.status === 404){
@@ -201,6 +198,7 @@ class App extends React.Component {
 			return;
 		}
 		const weatherData = {
+			id: 			data.id,
 			date: 			data.dt,
 			sunrise: 		data.sys.sunrise,
 			sunset: 		data.sys.sunset,
@@ -217,7 +215,7 @@ class App extends React.Component {
 	}
 
 	setForecastData = (data) => {
-		console.log('Forecast: ', data);
+		//console.log('Forecast: ', data);
 		if (!data){
 			return;
 		}
@@ -252,7 +250,7 @@ class App extends React.Component {
 		
 		const weatherData = await this.getCurrentWeather(cityData.id);
 
-		if (weatherData.error){
+		if (!weatherData){
 			// TODO: what to do if error
 			this.setState({ isFetching: false });
 			return;
@@ -263,6 +261,11 @@ class App extends React.Component {
 			gmtOffset = await this.getGMTOffsetByCoordinates(weatherData.coord.lat, weatherData.coord.lon);
 		}
 
+		if (!cityData.cityName || !cityData.countryCode){
+			cityData.cityName = weatherData.name;
+			cityData.countryCode = weatherData.sys.country;
+		}
+
 		this.setCityData(cityData, gmtOffset);
 		this.setWeatherData(weatherData);
 		this.addCityToLog(cityData, gmtOffset);
@@ -270,17 +273,20 @@ class App extends React.Component {
 
 
 		const forecastData = await this.getWeatherForecast(cityData.id);
-		console.dir('❎forecastData: ', forecastData);
+		console.log('❎forecastData: ', forecastData);
 
 		if (forecastData.error){
 			// TODO: what to do if error
 			return;
 		}
 		this.setForecastData(forecastData);
+		//console.log('ROUTR', this.props);
+		this.props.history.push(`/${cityData.id}`);
 	}
 
 
 	async componentDidMount(){
+
 		let cityLog = null;
 		let cityData = null;
 
@@ -289,72 +295,94 @@ class App extends React.Component {
 			cityLog = this.getCityLogFromLocalStorage();
 			cityData = cityLog[0];
 		}
-		// if not - define city by user's IP:
-		else{
-			const cityRespose = await this.getCityByIP();
-			console.log(cityRespose);
-			cityData = {
-				id: 			cityRespose.location.geoname_id,
-				cityName: 		cityRespose.city,
-				countryCode: 	cityRespose.country_code,
-			};
+
+		const path = this.props.match.path;
+
+		switch (path){
+			// option 1 -load weather for either cached city (if exists) or define city from user's IP address:
+			case "/": 
+				// if there's no cache, define city by IP:
+				if (!cityData){
+					const cityRespose = await this.getCityByIP();
+					console.log(cityRespose);
+					cityData = {
+						id: 			cityRespose.location.geoname_id,
+						cityName: 		cityRespose.city,
+						countryCode: 	cityRespose.country_code,
+					};
+				}
+				break;
+
+			// option 2 - load weather for a specified city id:
+			case "/:id": 
+				cityData = {
+					id: 			parseInt(this.props.match.params.id, 10),
+					cityName: 		null,
+					countryCode: 	null,
+				};
+				break;
 		}
+		
 
 		this.setState({ cityLog });
 		this.loadWeatherForCity(cityData);
 	}
 
+	showError = () => {
+		//console.log('SHOW?', 
+			// this.state.weather ? '1':'0',
+			// Object.getOwnPropertyNames(this.state.weather).length !== 0 ? '1':'0',
+			// this.state.weather.id === this.state.city.id  ? '1':'0',
+			// !this.state.isFetching ? '1':'0' );
+
+		//console.log('w.id, c.id: ', this.state.weather.id, this.state.city.id); 
+
+
+		if (this.state.weather 
+				&& Object.getOwnPropertyNames(this.state.weather).length !== 0
+				&& this.state.weather.id === this.state.city.id
+				&& !this.state.isFetching){
+					return false;
+				}
+		return true;
+	}
 
 
 	render() {
+
+		
+		//console.log('showError', this.showError());
 		return (
 			<div className="app">
-
-				<section className="current-section">
-					<DateString seconds={this.state.weather.date}
-								keepComma={true} />
-
-					<CityLog cityList={this.state.cityLog}
-							loadWeatherForCity={this.loadWeatherForCity} />
-
-					<SearchBox city={this.state.city}
-							loadWeatherForCity={this.loadWeatherForCity}/>
-
-					<GeoCoordinates lat={this.state.weather.lat}
-									lon={this.state.weather.lon}/>
-
-					<Suntime sunrise={this.state.weather.sunrise}
-							sunset={this.state.weather.sunset}
-							gmtOffset={this.state.city.gmtOffset}/>
-
-					<CurrentWeather weather={this.state.weather}
-									settings={{units: 'metric'}}/> {/*  //TODO:get from state.settings  */} 
-					
-									
-					<div className="error">
-						{/*  //TODO: error handling */} 
+				{
+					this.showError() 
+						? 
+							this.state.isFetching
+								? 
+									<div className="loader">
+										<img src={weatherIcons['loader']} alt="Please wait..."/>
+									</div>
+								:
+									<div className="error">ERROR</div>
 						
-					</div>
-					{
-						this.state.isFetching
-							?  <div className="loader">
-									<img src={weatherIcons['loader']} alt="Please wait..."/>
-								</div>
-							: null
-					}
-				</section>
+						: 
+							<React.Fragment>
+								<MainSection
+									city={this.state.city}
+									weather={this.state.weather}
+									cityLog={this.state.cityLog}
+									settings={this.props.settings}
+									isFetching={this.state.isFetching}
+									loadWeatherForCity={this.loadWeatherForCity} />
 
-				<section className="forecast-section">
-					{
-						this.state.forecast.map((item, i) => 
-							<ForecastDay key={i} 
-										 forecast={item}
-										 settings={{units: 'metric'}} /> 
-						)                                                /* //TODO: take units from state  */
-					}
-				</section>
-				<Footer />
-
+								<ForecastSection 
+									forecast={this.state.forecast}
+									settings={this.props.settings}/>
+									
+								<Footer />
+							</React.Fragment>
+				}
+				
 			</div>
 		);
 	}
@@ -369,7 +397,10 @@ export default App;
 // 2. Add React animations - ???
 // 3. NotFound error popup?? 
 
-// 4. When weather for requested city is loaded, change URL to specific weatherID
-// 5. add settings (lang, units)
+// 5. Check all proptypes (wind.js - expected units, but received settings
+//						   some components - proptypes are completely missing)
 // 6. <ForecastDay key={i} />     => generate some unique value
 // 7. fetch random image from unsplash for background
+// move all components to /components folder, correct all paths
+// 8. add Not Found component ???
+// 9. add Feedback component ???

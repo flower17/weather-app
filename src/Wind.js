@@ -26,7 +26,7 @@ const Wind = (props) => {
             <span>
                 {props.windSpeed}
                 {
-                    props.units === 'metric'
+                    props.settings.units === 'metric'
                         ? ' m/s '
                         : ' m/h '
                 }
@@ -38,7 +38,11 @@ const Wind = (props) => {
 Wind.propTypes = {
     windDir: PropTypes.number,
     windSpeed: PropTypes.number,
-    units: PropTypes.oneOf(['imperial', 'metric']).isRequired,
+    settings: PropTypes.shape({
+        units: PropTypes.oneOf(['imperial', 'metric']).isRequired,
+    }
+    ).isRequired,
+    
 };
 
 export default Wind;

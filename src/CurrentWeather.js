@@ -7,7 +7,7 @@ import Wind from './Wind';
 import './current-weather.scss';
 
 const CurrentWeather = props => {
-   
+    //console.log('CurrentWeather settings:', props.settings.units);
     return (
         <div className="current-weather">
             <div className="temp">
@@ -29,7 +29,7 @@ const CurrentWeather = props => {
             </div>
             <Wind windSpeed={props.weather.windSpeed} 
                   windDir={props.weather.windDir}
-                  units='metric' />   
+                  settings={props.settings} />   
             <div className="description">
                     {props.weather.description}
             </div>

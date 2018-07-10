@@ -12,7 +12,7 @@ body{
     position: relative;
 }
 
-.current-section{
+.main-section{
     background: rgb(54, 53, 53);
     flex-basis: 100%;
 }
@@ -48,6 +48,14 @@ body{
     flex-direction: row;
     flex-wrap: nowrap;
 }
+
+.error{
+    background:black;
+    color:red;
+    position: absolute;
+    bottom:0; top: 0; left:0; right:0;
+}
+
 @media (max-width: 559px){
     .app{
         width: 100%;
@@ -67,7 +75,7 @@ body{
         max-width: 1120px;
         width: 98%;
     }
-    .current-section{
+    .main-section{
         flex-basis: 50%;
     }
     .forecast-section{

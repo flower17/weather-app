@@ -89,12 +89,12 @@ const getMinTemp = (list) => {
 }
 
 const getNoonValues = (list, hours = 12) => {
-    //console.log('getNoonValues', list);
     return list.find(item => {
         const date = new Date(item.date*1000);
         if (date.getHours() === hours){
             return item;
         }
+        return null;
     });
 }
 
@@ -130,6 +130,9 @@ export const parseForecastData = (data) => {
         const tempMin = getMinTemp(dayValues);
 
         const item = getNoonValues(dayValues);
+        if (!item) {
+            return [];
+        }
         //console.log('AFTER getNoonValues', item);
         parsedData.push({ 
             date: Math.floor(nextDay/1000),
